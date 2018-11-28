@@ -39,19 +39,19 @@ public class PayPalClient {
         payment.setRedirectUrls(redirectUrls);
         Payment createdPayment;
         try {
-            String redirectUrl = "";
+            String redirectURI = "";
             APIContext context = new APIContext(clientId, clientSecret, "sandbox");
             createdPayment = payment.create(context);
             if(createdPayment!=null){
                 List<Links> links = createdPayment.getLinks();
                 for (Links link:links) {
                     if(link.getRel().equals("approval_url")){
-                        redirectUrl = link.getHref();
+                        redirectURI = link.getHref();
                         break;
                     }
                 }
                 response.put("status", "success");
-                response.put("redirect_url", redirectUrl);
+                response.put("redirectURI", redirectURI);
             }
         } catch (PayPalRESTException e) {
             System.out.println("Error happened during payment creation!");

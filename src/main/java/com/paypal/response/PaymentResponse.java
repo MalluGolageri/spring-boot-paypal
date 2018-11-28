@@ -3,6 +3,7 @@ package com.paypal.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.paypal.api.payments.BillingAgreementToken;
 import com.paypal.api.payments.Transaction;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ public class PaymentResponse implements Serializable {
     private String cart;
     private List<com.paypal.response.Transaction> transactions;
     private List<Error> failedTransactions;
-    private List<BillingAgreementToken> billingAgreementTokens;
+    private List<com.paypal.api.payments.BillingAgreementToken> billingAgreementTokens;
     private CreditFinancingOffered creditFinancingOffered;
     private String state;
     private String experienceProfileId;
@@ -97,7 +98,7 @@ public class PaymentResponse implements Serializable {
         this.failedTransactions = failedTransactions;
     }
 
-    public List<BillingAgreementToken> getBillingAgreementTokens() {
+    public List<com.paypal.api.payments.BillingAgreementToken> getBillingAgreementTokens() {
         return billingAgreementTokens;
     }
 

@@ -23,8 +23,7 @@ public class PayPalResponseConverter {
         paymentResponse.setCart(payment.getCart());
         paymentResponse.setTransactions(getTransactions(payment));
         paymentResponse.setFailedTransactions(getErrors(payment));
-//        BillingAgreementToken billingAgreementToken=new BillingAgreementToken();
-//        paymentResponse.setBillingAgreementTokens(payment.getBillingAgreementTokens());
+        paymentResponse.setBillingAgreementTokens(payment.getBillingAgreementTokens());
         paymentResponse.setCreditFinancingOffered(getCreditFinancingOffered(payment));
         paymentResponse.setState(payment.getState());
         paymentResponse.setExperienceProfileId(payment.getExperienceProfileId());

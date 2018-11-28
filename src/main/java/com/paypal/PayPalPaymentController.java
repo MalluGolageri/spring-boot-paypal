@@ -1,6 +1,5 @@
 package com.paypal;
 
-
 import com.paypal.api.payments.Payment;
 import com.paypal.response.PaymentResponse;
 import com.paypal.response.PayPalResponseConverter;
@@ -19,15 +18,14 @@ public class PayPalPaymentController {
     @Autowired
     private PayPalClient payPalClient;
 
-    @PostMapping("/make/payment")
+    @PostMapping("/checkout/payment")
     public Map<String, Object> makePayment(@RequestBody MakePaymentRequest makePaymentRequest) {
         return payPalClient.createPayment(makePaymentRequest.getTotalAmount());
     }
 
-    @PostMapping("/complete/payment")
+    @PostMapping("/authorize/payment")
     public PaymentResponse completePayment(@RequestBody PaymentRequest paymentRequest) {
         Payment payment = payPalClient.completePayment(paymentRequest.getPaymentId(), paymentRequest.getPayerId());
-        PaymentResponse paymentResponse = payPalResponseConverter.convert(payment);
-        return paymentResponse;
+        return payPalResponseConverter.convert(payment);
     }
 }
