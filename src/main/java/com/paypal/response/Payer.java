@@ -6,7 +6,6 @@ import com.paypal.api.payments.PayerInfo;
 
 import java.io.Serializable;
 import java.util.List;
-
 public class Payer implements Serializable {
 
     private String paymentMethod;

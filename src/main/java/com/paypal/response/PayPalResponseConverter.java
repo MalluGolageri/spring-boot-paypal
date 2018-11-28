@@ -14,7 +14,6 @@ public class PayPalResponseConverter {
 
     public PaymentResponse convert(Payment payment) {
         PaymentResponse paymentResponse=new PaymentResponse();
-
         paymentResponse.setId(payment.getId());
         paymentResponse.setIntent(payment.getIntent());
         paymentResponse.setPayer(getPayer(payment));
@@ -33,16 +32,14 @@ public class PayPalResponseConverter {
         paymentResponse.setCreateTime(payment.getCreateTime());
         paymentResponse.setUpdateTime(payment.getUpdateTime());
         paymentResponse.setLinks(getLinks(payment));
-
-
         return paymentResponse;
     }
 
     private List<Links> getLinks(Payment payment) {
-        List<Links> links=new ArrayList<>();
-        List<com.paypal.api.payments.Links> paypalLinks=payment.getLinks();
-        if(!StringUtils.isEmpty(paypalLinks)) {
-            for (com.paypal.api.payments.Links paypalLink : paypalLinks) {
+        List<Links> links = new ArrayList<>();
+        List<com.paypal.api.payments.Links> payPalLinks = payment.getLinks();
+        if (!StringUtils.isEmpty(payPalLinks)) {
+            for (com.paypal.api.payments.Links paypalLink : payPalLinks) {
                 Links link = new Links();
                 link.setEnctype(paypalLink.getEnctype());
                 link.setHref(paypalLink.getHref());

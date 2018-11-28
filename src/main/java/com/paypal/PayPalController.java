@@ -31,7 +31,7 @@ public class PayPalController {
     @RequestMapping(value = "/make/payment", method = RequestMethod.POST)
     public Map<String, Object> makePayment(HttpServletRequest servletRequest, HttpServletResponse servletResponse, @RequestParam("sum") String sum) throws IOException {
         Map<String, Object> resp = payPalClient.createPayment(sum);
-        String redirectUrl = (String) resp.get("redirect_url");
+        String redirectUrl = (String) resp.get("redirectURI");
 
         System.out.println(redirectUrl);
         servletResponse.sendRedirect(redirectUrl);
@@ -39,15 +39,20 @@ public class PayPalController {
     }
 
     @RequestMapping(value = "/complete/payment", method = RequestMethod.POST)
-    public Payment completePayment(HttpServletRequest request, HttpServletResponse servletResponse, @RequestParam("paymentId") String paymentId,
-                                               @RequestParam("payerId") String payerId) throws IOException {
+    public Payment completePayment(HttpServletRequest request, HttpServletResponse servletResponse,
+                                   @RequestParam("paymentId") String paymentId,
+                                   @RequestParam("payerId") String payerId,
+                                   @RequestParam("amount") String amount) throws IOException {
         System.out.println("completing payment, paymentId:" + paymentId + " payerId:" + payerId);
         if (StringUtils.isEmpty(paymentId)) paymentId = request.getParameter("paymentId");
         if (StringUtils.isEmpty(payerId)) payerId = request.getParameter("PayerID");
+        if (StringUtils.isEmpty(amount)) amount =request.getParameter("amount");
+        //TODO handle exception
+        Double total = Double.parseDouble(amount);
         Payment payment = payPalClient.completePayment(paymentId, payerId);
         if (payment != null) {
             System.out.println("==Request completed successfully==");
-            servletResponse.sendRedirect("http://localhost:8080/paypal/success");
+            servletResponse.sendRedirect("http://localhost:8080/paypal/success?amount=" + total);
         }
         return payment;
     }
@@ -58,7 +63,7 @@ public class PayPalController {
     }
 
     @RequestMapping(value = "/success", method = RequestMethod.GET)
-    public ModelAndView success() {
+    public ModelAndView success(HttpServletRequest request) {
         return new ModelAndView("/WEB-INF/view/success.jsp");
     }
 
