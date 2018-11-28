@@ -7,13 +7,12 @@
 
     paymentId: <%= request.getParameter("paymentId") %> <br/>
     PayerID: <%= request.getParameter("PayerID") %><br/>
-    Amount:<%= request.getParameter("amount") %>
-
-<h2> Please Confirm Payment </h2>
-&nbsp&nbsp&nbsp&nbsp&nbsp
-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-<input type="submit" name="submitButton" value="Confirm" />
+    Amount:<%= request.getParameter("amount") %> <br/>
+<br/> <br/>
+<input type="image" src="http://samedayexpress.ca/wp-content/uploads/2014/04/paynow_button.png" height="70" width="200" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
+
 </body>
 </html>
 
