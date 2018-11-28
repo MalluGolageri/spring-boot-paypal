@@ -1,5 +1,6 @@
 package com.paypal;
 
+import com.paypal.api.payments.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -26,6 +27,7 @@ public class PayPalController {
         this.payPalClient = payPalClient;
     }
 
+
     @RequestMapping(value = "/make/payment", method = RequestMethod.POST)
     public Map<String, Object> makePayment(HttpServletRequest servletRequest, HttpServletResponse servletResponse, @RequestParam("sum") String sum) throws IOException {
         Map<String, Object> resp = payPalClient.createPayment(sum);
@@ -37,17 +39,17 @@ public class PayPalController {
     }
 
     @RequestMapping(value = "/complete/payment", method = RequestMethod.POST)
-    public Map<String, Object> completePayment(HttpServletRequest request, HttpServletResponse servletResponse, @RequestParam("paymentId") String paymentId,
-                                               @RequestParam("payerId") String payerId) throws IOException, ServletException {
+    public Payment completePayment(HttpServletRequest request, HttpServletResponse servletResponse, @RequestParam("paymentId") String paymentId,
+                                               @RequestParam("payerId") String payerId) throws IOException {
         System.out.println("completing payment, paymentId:" + paymentId + " payerId:" + payerId);
         if (StringUtils.isEmpty(paymentId)) paymentId = request.getParameter("paymentId");
         if (StringUtils.isEmpty(payerId)) payerId = request.getParameter("PayerID");
-        Map<String, Object> resp = payPalClient.completePayment(paymentId, payerId);
-        if (!CollectionUtils.isEmpty(resp) && "success".equalsIgnoreCase((String) resp.get("status"))) {
+        Payment payment = payPalClient.completePayment(paymentId, payerId);
+        if (payment != null) {
             System.out.println("==Request completed successfully==");
             servletResponse.sendRedirect("http://localhost:8080/paypal/success");
         }
-        return resp;
+        return payment;
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)

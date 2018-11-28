@@ -68,8 +68,7 @@ public class PayPalClient {
     }
 
 
-    public Map<String, Object> completePayment(String paymentId, String payerId){
-        Map<String, Object> response = new HashMap();
+    public Payment completePayment(String paymentId, String payerId){
         Payment payment = new Payment();
         payment.setId(paymentId.replaceAll("^\"|\"$", ""));
         PaymentExecution paymentExecution = new PaymentExecution();
@@ -78,13 +77,14 @@ public class PayPalClient {
             APIContext context = new APIContext(clientId, clientSecret, "sandbox");
             Payment createdPayment = payment.execute(context, paymentExecution);
             if(createdPayment!=null){
-                response.put("status", "success");
-                response.put("payment", createdPayment);
+                //response.put("status", "success");
+                //response.put("payment", createdPayment);
+                return createdPayment;
             }
         } catch (PayPalRESTException e) {
             System.err.println(e.getDetails());
         }
-        return response;
+        return null;
     }
 
 
