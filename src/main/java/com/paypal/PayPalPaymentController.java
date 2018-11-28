@@ -20,8 +20,8 @@ public class PayPalPaymentController {
     private PayPalClient payPalClient;
 
     @PostMapping("/make/payment")
-    public Map<String, Object> makePayment(@RequestBody PaymentIn paymentIn) {
-        return payPalClient.createPayment(paymentIn.getSum());
+    public Map<String, Object> makePayment(@RequestBody MakePaymentRequest makePaymentRequest) {
+        return payPalClient.createPayment(makePaymentRequest.getTotalAmount());
     }
 
     @PostMapping("/complete/payment")

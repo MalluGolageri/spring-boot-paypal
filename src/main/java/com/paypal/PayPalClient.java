@@ -12,16 +12,8 @@ import java.util.Map;
 
 @Component
 public class PayPalClient {
-
-//    String clientId = "AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS";
-//    String clientSecret = "EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL";
-
     private String clientId = "AQ8RRyaOCg7cwJa5eR9qEDFMAvKBSpzkZY5JB8T8mmZvhdwyFOv72eKLUC6Q3ix-m-N7_aEYfnHQpRKp";
     private String clientSecret = "EJ_s6F5f_Z_cQdeVnzm-8-GLUZCFX63sUUmf60OzMh-l2TJmxHXtOnJQqZmwtUFa-EpQrpm7-5ZTmnsE";
-
-
-//    @Autowired
-//    PayPalClient(){}
 
     public Map<String, Object> createPayment(String sum){
         Map<String, Object> response = new HashMap<String, Object>();
@@ -77,8 +69,6 @@ public class PayPalClient {
             APIContext context = new APIContext(clientId, clientSecret, "sandbox");
             Payment createdPayment = payment.execute(context, paymentExecution);
             if(createdPayment!=null){
-                //response.put("status", "success");
-                //response.put("payment", createdPayment);
                 return createdPayment;
             }
         } catch (PayPalRESTException e) {

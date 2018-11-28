@@ -15,8 +15,6 @@ public class Payer implements Serializable {
     private String accountAge;
     private List<FundingInstrument> fundingInstruments;
     private String fundingOptionId;
-    @Deprecated
-    private FundingOption fundingOption;
     private String externalSelectedFundingInstrumentType;
     private FundingOption relatedFundingOption;
     private PayerInfo payerInfo;
@@ -67,15 +65,6 @@ public class Payer implements Serializable {
 
     public void setFundingOptionId(String fundingOptionId) {
         this.fundingOptionId = fundingOptionId;
-    }
-
-    /** @deprecated */
-    public FundingOption getFundingOption() {
-        return fundingOption;
-    }
-
-    public void setFundingOption(FundingOption fundingOption) {
-        this.fundingOption = fundingOption;
     }
 
     public String getExternalSelectedFundingInstrumentType() {

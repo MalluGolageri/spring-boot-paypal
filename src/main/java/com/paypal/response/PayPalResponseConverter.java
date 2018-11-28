@@ -145,7 +145,6 @@ public class PayPalResponseConverter {
             payer.setAccountType(payr.getAccountType());
             payer.setExternalSelectedFundingInstrumentType(payr.getExternalSelectedFundingInstrumentType());
             payer.setFundingInstruments(payr.getFundingInstruments());
-            payer.setFundingOption(payr.getFundingOption());
             payer.setFundingOptionId(payr.getFundingOptionId());
             payer.setPayerInfo(payr.getPayerInfo());
             payer.setPaymentMethod(payr.getPaymentMethod());
