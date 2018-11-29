@@ -1,12 +1,14 @@
-package com.paypal.response;
+package com.paypal.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.paypal.api.payments.DefinitionsLinkdescription;
 import com.paypal.api.payments.ErrorDetails;
 
 import java.io.Serializable;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Error implements Serializable {
 
     private String name;

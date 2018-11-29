@@ -1,9 +1,11 @@
-package com.paypal.response;
+package com.paypal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.paypal.api.payments.HyperSchema;
 
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Links implements Serializable {
 
     private String href;

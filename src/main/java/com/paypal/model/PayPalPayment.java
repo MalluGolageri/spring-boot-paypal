@@ -1,18 +1,14 @@
-package com.paypal.response;
-
+package com.paypal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.paypal.api.payments.BillingAgreementToken;
-import com.paypal.api.payments.Transaction;
 
 import java.io.Serializable;
 import java.util.List;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PaymentResponse implements Serializable {
+public class PayPalPayment implements Serializable {
 
     private String id;
     private String intent;
@@ -20,7 +16,7 @@ public class PaymentResponse implements Serializable {
     private PotentialPayerInfo potentialPayerInfo;
     private Payee payee;
     private String cart;
-    private List<com.paypal.response.Transaction> transactions;
+    private List<Transaction> transactions;
     private List<Error> failedTransactions;
     private List<com.paypal.api.payments.BillingAgreementToken> billingAgreementTokens;
     private CreditFinancingOffered creditFinancingOffered;
@@ -82,27 +78,19 @@ public class PaymentResponse implements Serializable {
         this.cart = cart;
     }
 
-    public List<com.paypal.response.Transaction> getTransactions() {
+    public List<com.paypal.model.Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<com.paypal.response.Transaction> transactions) {
+    public void setTransactions(List<com.paypal.model.Transaction> transactions) {
         this.transactions = transactions;
-    }
-
-    public List<Error> getFailedTransactions() {
-        return failedTransactions;
-    }
-
-    public void setFailedTransactions(List<Error> failedTransactions) {
-        this.failedTransactions = failedTransactions;
     }
 
     public List<com.paypal.api.payments.BillingAgreementToken> getBillingAgreementTokens() {
         return billingAgreementTokens;
     }
 
-    public void setBillingAgreementTokens(List<BillingAgreementToken> billingAgreementTokens) {
+    public void setBillingAgreementTokens(List<com.paypal.api.payments.BillingAgreementToken> billingAgreementTokens) {
         this.billingAgreementTokens = billingAgreementTokens;
     }
 
@@ -177,5 +165,12 @@ public class PaymentResponse implements Serializable {
     public void setLinks(List<Links> links) {
         this.links = links;
     }
-}
 
+    public List<Error> getFailedTransactions() {
+        return failedTransactions;
+    }
+
+    public void setFailedTransactions(List<Error> failedTransactions) {
+        this.failedTransactions = failedTransactions;
+    }
+}

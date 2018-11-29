@@ -1,7 +1,8 @@
-package com.paypal.response;
-
+package com.paypal.util;
 
 import com.paypal.api.payments.Payment;
+import com.paypal.model.*;
+import com.paypal.model.Error;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -10,32 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PayPalResponseConverter {
+public class PayPalUtil {
 
-    public PaymentResponse convert(Payment payment) {
-        PaymentResponse paymentResponse=new PaymentResponse();
-        paymentResponse.setId(payment.getId());
-        paymentResponse.setIntent(payment.getIntent());
-        paymentResponse.setPayer(getPayer(payment));
-        paymentResponse.setPotentialPayerInfo(getPotentialPayerInfo(payment));
-        paymentResponse.setPayee(getPayee(payment));
-        paymentResponse.setCart(payment.getCart());
-        paymentResponse.setTransactions(getTransactions(payment));
-        paymentResponse.setFailedTransactions(getErrors(payment));
-        paymentResponse.setBillingAgreementTokens(payment.getBillingAgreementTokens());
-        paymentResponse.setCreditFinancingOffered(getCreditFinancingOffered(payment));
-        paymentResponse.setState(payment.getState());
-        paymentResponse.setExperienceProfileId(payment.getExperienceProfileId());
-        paymentResponse.setNoteToPayer(payment.getNoteToPayer());
-        paymentResponse.setRedirectUrls(getRedirectUrls(payment));
-        paymentResponse.setFailureReason(payment.getFailureReason());
-        paymentResponse.setCreateTime(payment.getCreateTime());
-        paymentResponse.setUpdateTime(payment.getUpdateTime());
-        paymentResponse.setLinks(getLinks(payment));
-        return paymentResponse;
-    }
 
-    private List<Links> getLinks(Payment payment) {
+    public List<Links> getLinks(Payment payment) {
         List<Links> links = new ArrayList<>();
         List<com.paypal.api.payments.Links> payPalLinks = payment.getLinks();
         if (!StringUtils.isEmpty(payPalLinks)) {
@@ -53,7 +32,7 @@ public class PayPalResponseConverter {
         return links;
     }
 
-    private RedirectUrls getRedirectUrls(Payment payment) {
+    public RedirectUrls getRedirectUrls(Payment payment) {
         RedirectUrls redirectUrls=new RedirectUrls();
         com.paypal.api.payments.RedirectUrls urls=payment.getRedirectUrls();
         if(urls!=null){
@@ -63,7 +42,7 @@ public class PayPalResponseConverter {
         return redirectUrls;
     }
 
-    private CreditFinancingOffered getCreditFinancingOffered(Payment payment) {
+    public CreditFinancingOffered getCreditFinancingOffered(Payment payment) {
         CreditFinancingOffered creditFinancingOffered=new CreditFinancingOffered();
         com.paypal.api.payments.CreditFinancingOffered financingOffered=payment.getCreditFinancingOffered();
         if(financingOffered!=null) {
@@ -77,12 +56,12 @@ public class PayPalResponseConverter {
         return creditFinancingOffered;
     }
 
-    private List<Error> getErrors(Payment payment) {
-        List<Error> errors=new ArrayList<>();
+    public List<com.paypal.model.Error> getErrors(Payment payment) {
+        List<com.paypal.model.Error> errors=new ArrayList<>();
         List<com.paypal.api.payments.Error> errorList=payment.getFailedTransactions();
         if (!CollectionUtils.isEmpty(errorList)) {
             for(com.paypal.api.payments.Error err:errorList){
-                Error error = new Error();
+                com.paypal.model.Error error = new Error();
                 error.setDebugId(err.getDebugId());
                 error.setDetails(err.getDetails());
                 error.setInformationLink(err.getInformationLink());
@@ -95,18 +74,36 @@ public class PayPalResponseConverter {
         return errors;
     }
 
-    private List<Transaction> getTransactions(Payment payment) {
+    public List<Transaction> getTransactions(Payment payment) {
         List<Transaction> transactions = new ArrayList<>();
         List<com.paypal.api.payments.Transaction> paypalTransactions = payment.getTransactions();
         for (com.paypal.api.payments.Transaction trans : paypalTransactions) {
             Transaction transaction = new Transaction();
             transaction.setTransactions(trans.getTransactions());
+            transaction.setTransactions(trans.getTransactions());
+            transaction.setAmount(trans.getAmount());
+            transaction.setCustom(trans.getCustom());
+            transaction.setDescription(trans.getCustom());
+            transaction.setExternalFunding(trans.getExternalFunding());
+            transaction.setInvoiceNumber(trans.getInvoiceNumber());
+            transaction.setItemList(trans.getItemList());
+            transaction.setNoteToPayee(trans.getNoteToPayee());
+            transaction.setNotifyUrl(trans.getNotifyUrl());
+            transaction.setOrderUrl(trans.getOrderUrl());
+            transaction.setPayee(trans.getPayee());
+            transaction.setPaymentOptions(trans.getPaymentOptions());
+            transaction.setPurchaseUnitReferenceId(trans.getPurchaseUnitReferenceId());
+            transaction.setReferenceId(trans.getReferenceId());
+            //transaction.setRelatedResources(trans.getRelatedResources());
+            transaction.setSoftDescriptor(trans.getSoftDescriptor());
+            transaction.setSoftDescriptorCity(trans.getSoftDescriptorCity());
             transactions.add(transaction);
+
         }
         return transactions;
     }
 
-    private Payee getPayee(Payment payment) {
+    public Payee getPayee(Payment payment) {
         Payee payee=new Payee();
         com.paypal.api.payments.Payee payeee=payment.getPayee();
         if(payeee!=null){
@@ -121,7 +118,7 @@ public class PayPalResponseConverter {
         return payee;
     }
 
-    private PotentialPayerInfo getPotentialPayerInfo(Payment payment) {
+    public PotentialPayerInfo getPotentialPayerInfo(Payment payment) {
         com.paypal.api.payments.PotentialPayerInfo potentialPayerInfo=payment.getPotentialPayerInfo();
         PotentialPayerInfo payerInfo=new PotentialPayerInfo();
         if(potentialPayerInfo!=null){
@@ -133,7 +130,7 @@ public class PayPalResponseConverter {
         return payerInfo;
     }
 
-    private Payer getPayer(Payment payment) {
+    public Payer getPayer(Payment payment) {
         Payer payer = new Payer();
         com.paypal.api.payments.Payer payr = payment.getPayer();
         if (payr != null) {
@@ -150,5 +147,4 @@ public class PayPalResponseConverter {
         }
         return payer;
     }
-
 }

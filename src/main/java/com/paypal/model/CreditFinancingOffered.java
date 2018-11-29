@@ -1,9 +1,11 @@
-package com.paypal.response;
+package com.paypal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.paypal.api.payments.Currency;
 
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreditFinancingOffered implements Serializable {
 
     private Currency totalCost;

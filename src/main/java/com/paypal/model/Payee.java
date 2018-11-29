@@ -1,9 +1,11 @@
-package com.paypal.response;
+package com.paypal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.paypal.api.payments.Phone;
 
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Payee implements Serializable {
 
     private String email;

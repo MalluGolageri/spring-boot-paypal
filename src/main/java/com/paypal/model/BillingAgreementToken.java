@@ -1,6 +1,4 @@
-package com.paypal.response;
-
-import com.paypal.base.rest.PayPalModel;
+package com.paypal.model;
 
 import java.io.Serializable;
 
