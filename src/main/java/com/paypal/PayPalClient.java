@@ -29,25 +29,25 @@ public class PayPalClient {
         List<Transaction> transactions = new ArrayList<Transaction>();
         List<com.paypal.model.Transaction> paypalTransactions=paymentRequest.getTransactions();
         for(com.paypal.model.Transaction trans:paypalTransactions){
-            Transaction transaction1=new Transaction();
-            transaction1.setTransactions(trans.getTransactions());
-            transaction1.setAmount(trans.getAmount());
-            transaction1.setCustom(trans.getCustom());
-            transaction1.setDescription(trans.getCustom());
-            transaction1.setExternalFunding(trans.getExternalFunding());
-            transaction1.setInvoiceNumber(trans.getInvoiceNumber());
-            transaction1.setItemList(trans.getItemList());
-            transaction1.setNoteToPayee(trans.getNoteToPayee());
-            transaction1.setNotifyUrl(trans.getNotifyUrl());
-            transaction1.setOrderUrl(trans.getOrderUrl());
-            transaction1.setPayee(trans.getPayee());
-            transaction1.setPaymentOptions(trans.getPaymentOptions());
-            transaction1.setPurchaseUnitReferenceId(trans.getPurchaseUnitReferenceId());
-            transaction1.setReferenceId(trans.getReferenceId());
-            transaction1.setRelatedResources(trans.getRelatedResources());
-            transaction1.setSoftDescriptor(trans.getSoftDescriptor());
-            transaction1.setSoftDescriptorCity(trans.getSoftDescriptorCity());
-            transactions.add(transaction1);
+            Transaction transaction=new Transaction();
+            transaction.setTransactions(trans.getTransactions());
+            transaction.setAmount(trans.getAmount());
+            transaction.setCustom(trans.getCustom());
+            transaction.setDescription(trans.getCustom());
+            transaction.setExternalFunding(trans.getExternalFunding());
+            transaction.setInvoiceNumber(trans.getInvoiceNumber());
+            transaction.setItemList(trans.getItemList());
+            transaction.setNoteToPayee(trans.getNoteToPayee());
+            transaction.setNotifyUrl(trans.getNotifyUrl());
+            transaction.setOrderUrl(trans.getOrderUrl());
+            transaction.setPayee(trans.getPayee());
+            transaction.setPaymentOptions(trans.getPaymentOptions());
+            transaction.setPurchaseUnitReferenceId(trans.getPurchaseUnitReferenceId());
+            transaction.setReferenceId(trans.getReferenceId());
+            transaction.setRelatedResources(trans.getRelatedResources());
+            transaction.setSoftDescriptor(trans.getSoftDescriptor());
+            transaction.setSoftDescriptorCity(trans.getSoftDescriptorCity());
+            transactions.add(transaction);
         }
 
         payment.setTransactions(transactions);

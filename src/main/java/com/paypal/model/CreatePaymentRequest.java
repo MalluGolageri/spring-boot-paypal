@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreatePaymentRequest extends PaymentRequest implements Serializable { //extends PayPalPayment
+public class CreatePaymentRequest extends PaymentRequest implements Serializable {
 
     private String totalAmount;
 
