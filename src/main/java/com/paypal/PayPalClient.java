@@ -4,7 +4,9 @@ import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.paypal.model.CreatePaymentRequest;
+import com.paypal.model.UpdatePaymentRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,41 +83,6 @@ public class PayPalClient {
     }
 
 
-    public Payment checkoutPayment(String sum){
-        Amount amount = new Amount();
-        amount.setCurrency("USD");
-        amount.setTotal(sum);
-        Transaction transaction = new Transaction();
-        transaction.setAmount(amount);
-        List<Transaction> transactions = new ArrayList<Transaction>();
-        transactions.add(transaction);
-
-        Payer payer = new Payer();
-        payer.setPaymentMethod("paypal");
-
-        Payment payment = new Payment();
-        payment.setIntent("sale");
-        payment.setPayer(payer);
-
-
-        payment.setTransactions(transactions);
-
-        RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:8080/paypal/confirm");//cancel Url
-        redirectUrls.setReturnUrl("http://localhost:8080/paypal/confirm?amount=" + sum);
-        payment.setRedirectUrls(redirectUrls);
-        Payment createdPayment=null;
-        try {
-            APIContext context = new APIContext(clientId, clientSecret, "sandbox");
-            createdPayment = payment.create(context);
-        } catch (PayPalRESTException e) {
-            System.out.println("Error happened during payment creation!");
-        }
-        return createdPayment;
-    }
-
-
-
     public Map<String, Object> createPayment(String sum){
         Map<String, Object> response = new HashMap<String, Object>();
         Amount amount = new Amount();
@@ -179,5 +146,60 @@ public class PayPalClient {
     }
 
 
+    Payment updatePayment(String paymentId, List<Patch> patches) throws PayPalRESTException {
+        Payment payment = new Payment();
+        payment.setId(paymentId.replaceAll("^\"|\"$", ""));
+        APIContext context = new APIContext(clientId, clientSecret, "sandbox");
+        payment.update(context, patches);
+        return Payment.get(context, paymentId);
+    }
+
+    public Payment getPaymnent(String paymentId) throws PayPalRESTException {
+        Payment payment = new Payment();
+        payment.setId(paymentId.replaceAll("^\"|\"$", ""));
+        APIContext context = new APIContext(clientId, clientSecret, "sandbox");
+        return Payment.get(context, paymentId);
+    }
+
+
+//
+//    public Payment checkoutPayment(String sum){
+//        Amount amount = new Amount();
+//        amount.setCurrency("USD");
+//        amount.setTotal(sum);
+//        Transaction transaction = new Transaction();
+//        transaction.setAmount(amount);
+//        List<Transaction> transactions = new ArrayList<Transaction>();
+//        transactions.add(transaction);
+//
+//        Payer payer = new Payer();
+//        payer.setPaymentMethod("paypal");
+//
+//        Payment payment = new Payment();
+//        payment.setIntent("sale");
+//        payment.setPayer(payer);
+//
+//
+//        payment.setTransactions(transactions);
+//
+//        RedirectUrls redirectUrls = new RedirectUrls();
+//        redirectUrls.setCancelUrl("http://localhost:8080/paypal/confirm");//cancel Url
+//        redirectUrls.setReturnUrl("http://localhost:8080/paypal/confirm?amount=" + sum);
+//        payment.setRedirectUrls(redirectUrls);
+//        Payment createdPayment=null;
+//        try {
+//            APIContext context = new APIContext(clientId, clientSecret, "sandbox");
+//            createdPayment = payment.create(context);
+//        } catch (PayPalRESTException e) {
+//            System.out.println("Error happened during payment creation!");
+//        }
+//        return createdPayment;
+//    }
+
 
 }
+
+
+
+
+

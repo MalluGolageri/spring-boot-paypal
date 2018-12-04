@@ -117,7 +117,7 @@ public abstract class PayPalResponseConverter {
             transaction.setPaymentOptions(trans.getPaymentOptions());
             transaction.setPurchaseUnitReferenceId(trans.getPurchaseUnitReferenceId());
             transaction.setReferenceId(trans.getReferenceId());
-            transaction.setRelatedResources(trans.getRelatedResources());
+            //transaction.setRelatedResources(trans.getRelatedResources());
             transaction.setSoftDescriptor(trans.getSoftDescriptor());
             transaction.setSoftDescriptorCity(trans.getSoftDescriptorCity());
             transactions.add(transaction);

@@ -1,9 +1,12 @@
 package com.paypal;
 
 import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
+import com.paypal.model.UpdatePaymentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +33,6 @@ public class PayPalController {
     public Map<String, Object> makePayment(HttpServletRequest servletRequest, HttpServletResponse servletResponse, @RequestParam("sum") String sum) throws IOException {
         Map<String, Object> resp = payPalClient.createPayment(sum);
         String redirectUrl = (String) resp.get("redirectURI");
-
         System.out.println(redirectUrl);
         servletResponse.sendRedirect(redirectUrl);
         return resp;
@@ -44,7 +46,7 @@ public class PayPalController {
         System.out.println("completing payment, paymentId:" + paymentId + " payerId:" + payerId);
         if (StringUtils.isEmpty(paymentId)) paymentId = request.getParameter("paymentId");
         if (StringUtils.isEmpty(payerId)) payerId = request.getParameter("PayerID");
-        if (StringUtils.isEmpty(amount)) amount =request.getParameter("amount");
+        if (StringUtils.isEmpty(amount)) amount = request.getParameter("amount");
         //TODO handle exception
         Double total = Double.parseDouble(amount);
         Payment payment = payPalClient.completePayment(paymentId, payerId);
@@ -54,6 +56,20 @@ public class PayPalController {
         }
         return payment;
     }
+
+//    @RequestMapping(value = "/update/payment",method = RequestMethod.PATCH)
+//    public Map<String, Object> updatePayment(HttpServletRequest request,HttpServletResponse response,
+//                                             @RequestBody UpdatePaymentRequest updatePaymentRequest,
+//                                             @RequestParam("paymentId") String paymentId) throws IOException, PayPalRESTException {
+//        Map<String, Object> resp = payPalClient.updatePayment(paymentId, updatePaymentRequest);
+//        String redirectUrl = (String) resp.get("redirectURI");
+//        System.out.println(redirectUrl);
+//        response.sendRedirect(redirectUrl);
+//        return resp;
+//
+//    }
+
+
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
     public ModelAndView confirm() {
